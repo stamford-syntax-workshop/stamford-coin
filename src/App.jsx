@@ -1,19 +1,20 @@
 import { useState } from "react";
 
 import { Button, Container, Flex, Strong, Text, TextField } from "@radix-ui/themes";
-import { IconChartDots3, IconCoin, IconSearch } from "@tabler/icons-react";
+import { IconSearch } from "@tabler/icons-react";
+
+import { Link } from "react-router-dom";
 
 function App() {
 	const [btcInfo, setBtcInfo] = useState(null);
 
-	const { status, data } = btcInfo ? btcInfo : { status: "loading", data: null };
+	const { status, data } = btcInfo ? btcInfo : { status: "init", data: null };
 
 	// BTC UUID Qwsogvtv82FCd
 
 	return (
 		<Container>
 			<Flex direction="column" gap="4">
-				<Text>Hello from Radix Themes!</Text>
 				<form
 					onSubmit={(e) => {
 						e.preventDefault();
@@ -39,26 +40,20 @@ function App() {
 						<div className="ml-auto">
 							<Button>Search</Button>
 						</div>
-						<div className="flex flex-row">
-							<div className="relative h-64 w-64">
-								<IconCoin className="h-full w-full" />
-							</div>
-							<div className="relative h-64 w-64">
-								<IconChartDots3 className="h-full w-full" />
-							</div>
-						</div>
 					</Flex>
 				</form>
 
 				{btcInfo && status === "loading" && <Text>Loading...</Text>}
-				{/* {status === "error" && <Text>Error: {data.message}</Text>} */}
+				{status === "error" && <Text>Error: {data.message}</Text>}
 				{status === "success" && (
 					<Flex direction="column" gap="4">
 						<Text>Success!</Text>
 						{data.coins.map((coin) => (
-							<Text key={"coin_" + coin.uuid}>
-								<Strong>{coin.name}</Strong> ({coin.symbol})
-							</Text>
+							<Link key={"coin_" + coin.uuid} to={`/coins/${coin.uuid}`}>
+								<Text>
+									<Strong>{coin.name}</Strong> ({coin.symbol})
+								</Text>
+							</Link>
 						))}
 					</Flex>
 				)}
