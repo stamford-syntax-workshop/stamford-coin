@@ -3,8 +3,9 @@ import React from "react";
 
 export default function FourOhFour() {
 	return (
-		<Container>
-			<Text>Uh Oh! Stinky! Not Found!</Text>
-		</Container>
+		<div className="flex flex-col items-center justify-center h-96">
+			<Text align="center" color="red" size="7">Uh Oh! Stinky!</Text>
+			<Text align="center" className="text-2xl text-gray-700">Not Found!</Text>
+		</div>
 	);
 }

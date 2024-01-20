@@ -1,4 +1,4 @@
-import { Container } from "@radix-ui/themes";
+import { Container, Heading, Box, Flex, Text } from "@radix-ui/themes";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
@@ -7,7 +7,19 @@ export default function CoinsPage() {
 	// <Route path="*" element={<FourOhFour />} />
 	// Can you guess why?
 	const { uuid } = useParams();
+	const getCommonClasses = () =>
+		"outline outline-gray-500/65 p-4 rounded mt-5 text-center max-w-96 min-w-96 flex flex-col";
 
+	const InfoCard = ({ title, value, size, color, mb }) => (
+		<div className={getCommonClasses()}>
+			<Text as="span" size="5" mb="1">
+				{title}
+			</Text>
+			<Text as="span" size={size} color={color} mb={mb}>
+				{value}
+			</Text>
+		</div>
+	);
 	// {
 	// 	"status": "success",
 	// 	"data": {
@@ -58,21 +70,47 @@ export default function CoinsPage() {
 
 	return (
 		<Container>
-			<h1>CoinsPage for UUID {uuid}</h1>
-			{isLoading && <p>Loading...</p>}
+			<Heading color="indigo" align="center" size={6} className="mb-4">
+				Coin Page
+			</Heading>
+			<Heading color="indigo" align="center">
+				UUID : {uuid}{" "}
+			</Heading>
+			{isLoading && (
+				<div className="flex justify-center items-center h-full">
+					<Text color="green" size="4">Loading...</Text>
+				</div>
+			)}
 			{coinInfo && coinInfo.status === "success" && (
-				<>
-					<p>Price: {coinInfo.data.referenceCurrencyRate.toFixed(2)} USD</p>
-					<p>
-						{/* the totalmarketcap cannot be .toFixed(2) prolly cuz datatype, fix it xd */}
-						{coinInfo.data.totalCoins} coins with a total market cap of {coinInfo.data.totalMarketCap}{" "}
-						{coinInfo.data.btcDominance.toFixed(2)}% BTC dominance
-					</p>
-					<p>
-						{coinInfo.data.bestCoins.length} best coins, the first one is {coinInfo.data.bestCoins[0].name}{" "}
-						({coinInfo.data.bestCoins[0].symbol})
-					</p>
-				</>
+				<div className="flex flex-col items-center">
+					<InfoCard
+						title="Price💲"
+						value={`${coinInfo.data.referenceCurrencyRate.toFixed(2)} USD`}
+						size="7"
+						color="green"
+					/>
+					<InfoCard title="Coins 🪙" value={coinInfo.data.totalCoins} size="7" color="yellow" />
+					<InfoCard
+						title="Total Market Cap 📈"
+						value={coinInfo.data.totalMarketCap}
+						size="6"
+						color="red"
+						mb="3"
+					/>
+					<InfoCard
+						title="BTC dominance 🚀"
+						value={`${coinInfo.data.btcDominance.toFixed(2)}%`}
+						size="7"
+						color="green"
+					/>
+					<InfoCard
+						title={`Best Coin : ${coinInfo.data.bestCoins.length}`}
+						value={`1st ${coinInfo.data.bestCoins[0].name} : (${coinInfo.data.bestCoins[0].symbol})`}
+						size="7"
+						color="orange"
+						mb="1"
+					/>
+				</div>
 			)}
 
 			{coinInfo && coinInfo.status === "error" && <p>Error: {coinInfo.data.message}</p>}

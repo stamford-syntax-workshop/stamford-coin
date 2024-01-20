@@ -14,7 +14,7 @@ function App() {
 
 	return (
 		<Container>
-			<Flex direction="column" gap="4">
+			<Flex direction="column" gap="4" >
 				<form
 					onSubmit={(e) => {
 						e.preventDefault();
@@ -46,16 +46,22 @@ function App() {
 				{btcInfo && status === "loading" && <Text>Loading...</Text>}
 				{status === "error" && <Text>Error: {data.message}</Text>}
 				{status === "success" && (
-					<Flex direction="column" gap="4">
-						<Text>Success!</Text>
-						{data.coins.map((coin) => (
-							<Link key={"coin_" + coin.uuid} to={`/coins/${coin.uuid}`}>
-								<Text>
-									<Strong>{coin.name}</Strong> ({coin.symbol})
-								</Text>
-							</Link>
-						))}
-					</Flex>
+					<div className="max-h-96 overflow-auto">
+						<Flex direction="column" gap="4">
+							<Text align="center" size="5" color="green">Success!</Text>
+							{data.coins.map((coin) => (
+								<Link 
+									key={"coin_" + coin.uuid} 
+									to={`/coins/${coin.uuid}`} 
+									className="p-1 rounded hover:bg-blue-500/50 "
+								>
+									<Text>
+										<Strong>{coin.name}</Strong> ({coin.symbol})
+									</Text>
+								</Link>
+							))}
+						</Flex>
+					</div>
 				)}
 			</Flex>
 		</Container>
