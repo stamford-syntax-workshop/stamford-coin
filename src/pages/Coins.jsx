@@ -1,4 +1,5 @@
 import { Card, Container, Flex, Text } from "@radix-ui/themes";
+import { IconGraph, IconMoneybag } from "@tabler/icons-react";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
@@ -28,7 +29,6 @@ export default function CoinsPage() {
 
 	return (
 		<Container>
-			<h1>CoinsPage for UUID {uuid}</h1>
 			{isLoading && <p>Loading...</p>}
 			{coinInfo && coinInfo.status === "success" && (
 				<Card>
@@ -40,8 +40,16 @@ export default function CoinsPage() {
 							</Text>
 						</div>
 						<Text>{coinInfo.data.coin.description}</Text>
-						<Text>Price: {Number(coinInfo.data.coin.price).toFixed(2)} USD</Text>
-						<Text>Market Cap: {coinInfo.data.coin.marketCap ?? "N/A"}</Text>
+
+						<Flex pt="2" gap="2">
+							<IconMoneybag />
+							<Text>Price: {Number(coinInfo.data.coin.price).toFixed(2)} USD</Text>
+						</Flex>
+
+						<Flex gap="2">
+							<IconGraph />
+							<Text>Market Cap: {coinInfo.data.coin.marketCap ?? "N/A"}</Text>
+						</Flex>
 					</Flex>
 				</Card>
 			)}
