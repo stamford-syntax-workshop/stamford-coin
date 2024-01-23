@@ -97,7 +97,7 @@ function App() {
 				)}
 
 				{/* status: "fail", code: "RATE_LIMIT_EXCEEDED" */}
-				{status === "fail" && <Text>Error: {btcInfo.message}</Text>}
+				{status === "fail" && <Text>Error! {btcInfo.message}</Text>}
 
 				{status === "success" && (
 					<Flex direction="column" gap="4">
