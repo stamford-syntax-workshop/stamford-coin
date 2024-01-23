@@ -46,7 +46,6 @@ function App() {
 				{btcInfo && status === "loading" && <Text>Loading...</Text>}
 				{status === "error" && <Text>Error: {data.message}</Text>}
 				{status === "success" && (
-					<div className="max-h-96 overflow-auto">
 						<Flex direction="column" gap="4">
 							<Text align="center" size="5" color="green">Success!</Text>
 							{data.coins.map((coin) => (
@@ -61,7 +60,6 @@ function App() {
 								</Link>
 							))}
 						</Flex>
-					</div>
 				)}
 			</Flex>
 		</Container>
